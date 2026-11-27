@@ -244,6 +244,7 @@
       border-radius: 12px;
       padding: 13px;
       margin-bottom: 10px;
+      break-inside: avoid;
     }
 
     .record-top {
@@ -282,6 +283,11 @@
       margin-top: 8px;
     }
 
+    /* Cabecera solo visible al exportar PDF */
+    .print-only-header {
+      display: none;
+    }
+
     /* Navegación inferior */
     nav.bottom-nav {
       position: fixed;
@@ -308,6 +314,68 @@
       color: #f7dfc7;
       box-shadow: inset 0 3px 0 var(--accent);
     }
+
+    /* Estilos limpios para imprimir / guardar como PDF */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        padding-bottom: 0 !important;
+      }
+      header, nav.bottom-nav, .tabs, .btn, #logout-btn {
+        display: none !important;
+      }
+      .print-only-header {
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 2px solid #222;
+        padding-bottom: 10px;
+        margin-bottom: 16px;
+      }
+      .print-only-header img {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+      }
+      .print-only-header h1 {
+        font-size: 1.15rem;
+        color: #000;
+      }
+      .print-only-header p {
+        font-size: 0.85rem;
+        color: #444;
+      }
+      .container {
+        max-width: 100%;
+        padding: 0;
+      }
+      .card, .stat-box, .record-item {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+      }
+      h2, .stat-box .num {
+        color: #000 !important;
+      }
+      .badge {
+        background: #eee !important;
+        color: #000 !important;
+        border: 1px solid #bbb;
+      }
+      .record-meta, .stat-box .lbl, label {
+        color: #333 !important;
+      }
+      select {
+        border: none !important;
+        background: transparent !important;
+        color: #000 !important;
+        padding: 0 !important;
+        font-weight: 700;
+        appearance: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -318,8 +386,8 @@
     <h1>AGRUPACIÓN LOCAL<br />CAZADORES GUADALUPE</h1>
 
     <div class="tabs">
-      <button type="button" id="auth-tab-login" class="tab-btn active">Iniciar sesión</button>
-      <button type="button" id="auth-tab-register" class="tab-btn">Crear usuario</button>
+      <button type="button" id="auth-tab-login" class="tab-btn active" onclick="window.showLoginTab()">Iniciar sesión</button>
+      <button type="button" id="auth-tab-register" class="tab-btn" onclick="window.showRegisterTab()">Crear usuario</button>
     </div>
 
     <!-- INICIAR SESIÓN -->
@@ -362,6 +430,15 @@
     </header>
 
     <main class="container">
+      <!-- ENCABEZADO SOLO PARA IMPRESIÓN / PDF -->
+      <div class="print-only-header">
+        <img src="logo-guadalupe.png" alt="Logo Guadalupe" />
+        <div>
+          <h1>Agrupación Local Cazadores Guadalupe</h1>
+          <p id="print-subtitle">Informe de capturas y estadísticas</p>
+        </div>
+      </div>
+
       <!-- PESTAÑA 1: AÑADIR REGISTROS -->
       <section id="view-add">
         <div class="tabs">
@@ -454,7 +531,11 @@
       <!-- PESTAÑA 2: RESÚMENES Y ORDENACIÓN -->
       <section id="view-stats" class="hidden">
         <div class="card">
-          <h2>Resumen por Temporada / Año</h2>
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <h2 style="margin-bottom: 0;">Resumen por Temporada / Año</h2>
+            <button type="button" id="export-pdf-btn" class="btn btn-secondary btn-small" onclick="window.exportarPDF()">Descargar / PDF</button>
+          </div>
+
           <div class="grid-2">
             <div class="form-group">
               <label for="filter-year">Temporada / Año</label>
@@ -602,6 +683,9 @@
       loginError.textContent = "";
       registerMsg.textContent = "";
     }
+
+    window.showLoginTab = showLoginTab;
+    window.showRegisterTab = showRegisterTab;
 
     authTabLogin.addEventListener("click", showLoginTab);
     authTabRegister.addEventListener("click", showRegisterTab);
@@ -920,6 +1004,26 @@
       if (confirm("¿Seguro que quieres eliminar este registro?")) {
         await deleteDoc(doc(db, "capturas", id));
       }
+    };
+
+    window.exportarPDF = () => {
+      const prevTitle = document.title;
+      const yearLabel = filterYear.value === "todos" ? "Todos los años" : `Temporada ${filterYear.value}`;
+      const filterLabel =
+        currentListFilter === "monteria"
+          ? "Solo Monterías"
+          : currentListFilter === "er"
+            ? "Solo Esperas y Recechos"
+            : "Todas las modalidades";
+      const fechaHoy = new Date().toLocaleDateString("es-ES");
+
+      document.getElementById("print-subtitle").textContent =
+        `${yearLabel} · ${filterLabel} · Emitido el ${fechaHoy}`;
+      document.title = `Cazadores Guadalupe - ${yearLabel}`;
+      window.print();
+      setTimeout(() => {
+        document.title = prevTitle;
+      }, 500);
     };
   </script>
 </body>
