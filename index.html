@@ -41,7 +41,7 @@
       display: none !important;
     }
 
-    /* Login */
+    /* Login / Registro */
     .login-box {
       max-width: 400px;
       margin: 40px auto;
@@ -67,7 +67,7 @@
     .login-box h1 {
       font-size: 1.15rem;
       letter-spacing: 0.5px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       line-height: 1.35;
     }
 
@@ -312,11 +312,17 @@
 </head>
 <body>
 
-  <!-- PANTALLA DE LOGIN -->
+  <!-- PANTALLA PRINCIPAL DE ACCESO (LOGIN / CREAR USUARIO) -->
   <section id="login-view" class="login-box">
     <img src="logo-guadalupe.png" alt="Logo Agrupación Local Cazadores Guadalupe" class="logo-img" />
     <h1>AGRUPACIÓN LOCAL<br />CAZADORES GUADALUPE</h1>
 
+    <div class="tabs">
+      <button type="button" id="auth-tab-login" class="tab-btn active">Iniciar sesión</button>
+      <button type="button" id="auth-tab-register" class="tab-btn">Crear usuario</button>
+    </div>
+
+    <!-- INICIAR SESIÓN -->
     <form id="login-form">
       <div class="form-group">
         <label for="login-user">Usuario o correo electrónico</label>
@@ -328,6 +334,20 @@
       </div>
       <button type="submit" class="btn">Iniciar sesión</button>
       <p id="login-error" class="msg-error"></p>
+    </form>
+
+    <!-- CREAR USUARIO -->
+    <form id="register-form" class="hidden">
+      <div class="form-group">
+        <label for="register-user">Usuario o correo electrónico</label>
+        <input type="text" id="register-user" placeholder="Ej. socio@guadalupe.es o juanperez" required />
+      </div>
+      <div class="form-group">
+        <label for="register-password">Contraseña (mínimo 6 caracteres)</label>
+        <input type="password" id="register-password" minlength="6" placeholder="••••••••" required />
+      </div>
+      <button type="submit" class="btn">Crear usuario y entrar</button>
+      <p id="register-msg" class="msg-error"></p>
     </form>
   </section>
 
@@ -495,6 +515,7 @@
     import {
       getAuth,
       signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
       signOut,
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
@@ -511,12 +532,12 @@
     } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAilZ1d1soim8YEhqJxUGpO45OSyuKEzWQ", //[span_1](start_span)[span_1](end_span)
-      authDomain: "estadisticascaza.firebaseapp.com", //[span_2](start_span)[span_2](end_span)
-      projectId: "estadisticascaza", //[span_3](start_span)[span_3](end_span)
-      storageBucket: "estadisticascaza.firebasestorage.app", //[span_4](start_span)[span_4](end_span)
-      messagingSenderId: "115409698201", //[span_5](start_span)[span_5](end_span)
-      appId: "1:115409698201:web:615b8535fdac680110a708" //[span_6](start_span)[span_6](end_span)
+      apiKey: "AIzaSyAilZ1d1soim8YEhqJxUGpO45OSyuKEzWQ",[span_3](start_span)[span_3](end_span)
+      authDomain: "estadisticascaza.firebaseapp.com",[span_4](start_span)[span_4](end_span)
+      projectId: "estadisticascaza",[span_5](start_span)[span_5](end_span)
+      storageBucket: "estadisticascaza.firebasestorage.app",[span_6](start_span)[span_6](end_span)
+      messagingSenderId: "115409698201",[span_7](start_span)[span_7](end_span)
+      appId: "1:115409698201:web:615b8535fdac680110a708[span_8](start_span)"[span_8](end_span)
     };
 
     const app = initializeApp(firebaseConfig);
@@ -526,6 +547,13 @@
     // Dominio auxiliar si el usuario escribe un nombre de usuario sin '@'
     const DEFAULT_USER_DOMAIN = "cazadoresguadalupe.local";
 
+    function toAuthEmail(rawInput) {
+      const clean = rawInput.trim();
+      return clean.includes("@")
+        ? clean
+        : `${clean.toLowerCase().replace(/\s+/g, "")}@${DEFAULT_USER_DOMAIN}`;
+    }
+
     let allRecords = [];
     let currentListFilter = "todas";
     let unsubscribeRecords = null;
@@ -533,8 +561,12 @@
     // Elementos DOM
     const loginView = document.getElementById("login-view");
     const appView = document.getElementById("app-view");
+    const authTabLogin = document.getElementById("auth-tab-login");
+    const authTabRegister = document.getElementById("auth-tab-register");
     const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
     const loginError = document.getElementById("login-error");
+    const registerMsg = document.getElementById("register-msg");
     const logoutBtn = document.getElementById("logout-btn");
 
     const navAdd = document.getElementById("nav-add");
@@ -554,6 +586,25 @@
     const filterYear = document.getElementById("filter-year");
     const sortBy = document.getElementById("sort-by");
     const recordsList = document.getElementById("records-list");
+
+    // Alternar entre Iniciar sesión y Crear usuario en pantalla principal
+    authTabLogin.addEventListener("click", () => {
+      authTabLogin.classList.add("active");
+      authTabRegister.classList.remove("active");
+      loginForm.classList.remove("hidden");
+      registerForm.classList.add("hidden");
+      loginError.textContent = "";
+      registerMsg.textContent = "";
+    });
+
+    authTabRegister.addEventListener("click", () => {
+      authTabRegister.classList.add("active");
+      authTabLogin.classList.remove("active");
+      registerForm.classList.remove("hidden");
+      loginForm.classList.add("hidden");
+      loginError.textContent = "";
+      registerMsg.textContent = "";
+    });
 
     // Establecer fecha de hoy por defecto
     const todayISO = new Date().toISOString().split("T")[0];
@@ -606,17 +657,38 @@
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       loginError.textContent = "";
-      let rawUser = document.getElementById("login-user").value.trim();
+      const rawUser = document.getElementById("login-user").value;
       const password = document.getElementById("login-password").value;
-
-      const email = rawUser.includes("@")
-        ? rawUser
-        : `${rawUser.toLowerCase().replace(/\s+/g, "")}@${DEFAULT_USER_DOMAIN}`;
+      const email = toAuthEmail(rawUser);
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
       } catch (err) {
         loginError.textContent = "Usuario o contraseña incorrectos.";
+      }
+    });
+
+    // Crear nuevo usuario en Firebase Authentication y entrar
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      registerMsg.className = "msg-error";
+      registerMsg.textContent = "Creando usuario...";
+      const rawUser = document.getElementById("register-user").value;
+      const password = document.getElementById("register-password").value;
+      const email = toAuthEmail(rawUser);
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (err) {
+        if (err.code === "auth/email-already-in-use") {
+          registerMsg.textContent = "Ese usuario o correo ya está registrado.";
+        } else if (err.code === "auth/weak-password") {
+          registerMsg.textContent = "La contraseña debe tener al menos 6 caracteres.";
+        } else if (err.code === "auth/operation-not-allowed") {
+          registerMsg.textContent = "Activa 'Correo electrónico / contraseña' en Firebase Authentication.";
+        } else {
+          registerMsg.textContent = "No se pudo crear el usuario. Revisa los datos.";
+        }
       }
     });
 
@@ -697,7 +769,7 @@
         especie = "Jabalí";
         cantidad = Number(document.getElementById("er-jabali-num").value) || 0;
       } else {
-        especie = document.getElementById("er-especie-rececho").value; // Venado o Corzo
+        especie = document.getElementById("er-especie-rececho").value;
         cantidad = Number(document.getElementById("er-rececho-num").value) || 0;
       }
 
