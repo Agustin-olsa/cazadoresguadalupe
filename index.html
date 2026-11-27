@@ -532,19 +532,18 @@
     } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAilZ1d1soim8YEhqJxUGpO45OSyuKEzWQ",[span_3](start_span)[span_3](end_span)
-      authDomain: "estadisticascaza.firebaseapp.com",[span_4](start_span)[span_4](end_span)
-      projectId: "estadisticascaza",[span_5](start_span)[span_5](end_span)
-      storageBucket: "estadisticascaza.firebasestorage.app",[span_6](start_span)[span_6](end_span)
-      messagingSenderId: "115409698201",[span_7](start_span)[span_7](end_span)
-      appId: "1:115409698201:web:615b8535fdac680110a708[span_8](start_span)"[span_8](end_span)
+      apiKey: "AIzaSyAilZ1d1soim8YEhqJxUGpO45OSyuKEzWQ",
+      authDomain: "estadisticascaza.firebaseapp.com",
+      projectId: "estadisticascaza",
+      storageBucket: "estadisticascaza.firebasestorage.app",
+      messagingSenderId: "115409698201",
+      appId: "1:115409698201:web:615b8535fdac680110a708"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Dominio auxiliar si el usuario escribe un nombre de usuario sin '@'
     const DEFAULT_USER_DOMAIN = "cazadoresguadalupe.local";
 
     function toAuthEmail(rawInput) {
@@ -558,7 +557,6 @@
     let currentListFilter = "todas";
     let unsubscribeRecords = null;
 
-    // Elementos DOM
     const loginView = document.getElementById("login-view");
     const appView = document.getElementById("app-view");
     const authTabLogin = document.getElementById("auth-tab-login");
@@ -587,31 +585,31 @@
     const sortBy = document.getElementById("sort-by");
     const recordsList = document.getElementById("records-list");
 
-    // Alternar entre Iniciar sesión y Crear usuario en pantalla principal
-    authTabLogin.addEventListener("click", () => {
+    function showLoginTab() {
       authTabLogin.classList.add("active");
       authTabRegister.classList.remove("active");
       loginForm.classList.remove("hidden");
       registerForm.classList.add("hidden");
       loginError.textContent = "";
       registerMsg.textContent = "";
-    });
+    }
 
-    authTabRegister.addEventListener("click", () => {
+    function showRegisterTab() {
       authTabRegister.classList.add("active");
       authTabLogin.classList.remove("active");
       registerForm.classList.remove("hidden");
       loginForm.classList.add("hidden");
       loginError.textContent = "";
       registerMsg.textContent = "";
-    });
+    }
 
-    // Establecer fecha de hoy por defecto
+    authTabLogin.addEventListener("click", showLoginTab);
+    authTabRegister.addEventListener("click", showRegisterTab);
+
     const todayISO = new Date().toISOString().split("T")[0];
     document.getElementById("monteria-fecha").value = todayISO;
     document.getElementById("er-fecha").value = todayISO;
 
-    // Cambio entre Espera y Rececho
     erAccion.addEventListener("change", () => {
       if (erAccion.value === "Espera") {
         erEsperaFields.classList.remove("hidden");
@@ -622,7 +620,6 @@
       }
     });
 
-    // Pestañas del formulario
     tabMonteria.addEventListener("click", () => {
       tabMonteria.classList.add("active");
       tabER.classList.remove("active");
@@ -637,7 +634,6 @@
       formMonteria.classList.add("hidden");
     });
 
-    // Navegación inferior
     navAdd.addEventListener("click", () => {
       navAdd.classList.add("active");
       navStats.classList.remove("active");
@@ -653,7 +649,6 @@
       renderStatsAndList();
     });
 
-    // Login con usuario / contraseña
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       loginError.textContent = "";
@@ -668,7 +663,6 @@
       }
     });
 
-    // Crear nuevo usuario en Firebase Authentication y entrar
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       registerMsg.className = "msg-error";
@@ -696,7 +690,6 @@
       await signOut(auth);
     });
 
-    // Escuchar estado de autenticación
     onAuthStateChanged(auth, (user) => {
       if (user) {
         loginView.classList.add("hidden");
@@ -709,7 +702,6 @@
       }
     });
 
-    // Guardar Montería en Firestore
     formMonteria.addEventListener("submit", async (e) => {
       e.preventDefault();
       const msgEl = document.getElementById("monteria-msg");
@@ -751,7 +743,6 @@
       }
     });
 
-    // Guardar Espera / Rececho en Firestore
     formER.addEventListener("submit", async (e) => {
       e.preventDefault();
       const msgEl = document.getElementById("er-msg");
@@ -794,7 +785,6 @@
       }
     });
 
-    // Escuchar datos en tiempo real desde Firestore
     function subscribeToCapturas() {
       const q = query(collection(db, "capturas"), orderBy("fecha", "desc"));
       unsubscribeRecords = onSnapshot(q, (snapshot) => {
@@ -825,7 +815,6 @@
       }
     }
 
-    // Filtros de listado
     document.querySelectorAll(".list-filter-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".list-filter-btn").forEach((b) => b.classList.remove("active"));
@@ -858,7 +847,6 @@
       document.getElementById("stat-total-monterias").textContent = totalMonterias;
       document.getElementById("stat-total-er").textContent = totalER;
 
-      // Desglose por año/temporada
       const byYear = {};
       allRecords.forEach((r) => {
         const y = r.anio || "Sin año";
@@ -877,7 +865,6 @@
           ).join("")
         : "<div>Aún no hay registros guardados.</div>";
 
-      // Filtrar por tipo para la lista y ordenar
       let listItems = currentListFilter === "todas"
         ? [...yearFiltered]
         : yearFiltered.filter((r) => r.tipo === currentListFilter);
