@@ -1,0 +1,876 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2908
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="es">\
+<head>\
+  <meta charset="UTF-8" />\
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />\
+  <title>Agrupaci\'f3n Local Cazadores Guadalupe \'97 Registro de Caza</title>\
+  <style>\
+    :root \{\
+      --bg-dark: #18221b;\
+      --bg-card: #223026;\
+      --bg-input: #2c3d31;\
+      --accent: #b87a4b;\
+      --accent-hover: #cf8c59;\
+      --text-main: #f3f1ec;\
+      --text-muted: #b8c2ba;\
+      --border: #3b4f41;\
+      --danger: #c95b4b;\
+    \}\
+\
+    * \{\
+      box-sizing: border-box;\
+      margin: 0;\
+      padding: 0;\
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;\
+    \}\
+\
+    body \{\
+      background-color: var(--bg-dark);\
+      color: var(--text-main);\
+      min-height: 100vh;\
+      padding-bottom: 80px;\
+    \}\
+\
+    .container \{\
+      max-width: 640px;\
+      margin: 0 auto;\
+      padding: 16px;\
+    \}\
+\
+    .hidden \{\
+      display: none !important;\
+    \}\
+\
+    /* Login */\
+    .login-box \{\
+      max-width: 400px;\
+      margin: 40px auto;\
+      background: var(--bg-card);\
+      border: 1px solid var(--border);\
+      border-radius: 16px;\
+      padding: 28px 22px;\
+      text-align: center;\
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);\
+    \}\
+\
+    .logo-img \{\
+      width: 128px;\
+      height: 128px;\
+      object-fit: contain;\
+      border-radius: 50%;\
+      background: #fff;\
+      padding: 4px;\
+      margin: 0 auto 14px;\
+      display: block;\
+    \}\
+\
+    .login-box h1 \{\
+      font-size: 1.15rem;\
+      letter-spacing: 0.5px;\
+      margin-bottom: 20px;\
+      line-height: 1.35;\
+    \}\
+\
+    /* Cabecera App */\
+    header \{\
+      display: flex;\
+      align-items: center;\
+      justify-content: space-between;\
+      background: var(--bg-card);\
+      border-bottom: 1px solid var(--border);\
+      padding: 12px 16px;\
+      position: sticky;\
+      top: 0;\
+      z-index: 10;\
+    \}\
+\
+    .header-brand \{\
+      display: flex;\
+      align-items: center;\
+      gap: 10px;\
+    \}\
+\
+    .header-brand img \{\
+      width: 40px;\
+      height: 40px;\
+      border-radius: 50%;\
+      background: #fff;\
+      padding: 2px;\
+      object-fit: contain;\
+    \}\
+\
+    .header-brand span \{\
+      font-weight: 700;\
+      font-size: 0.95rem;\
+    \}\
+\
+    /* Formularios y tarjetas */\
+    .card \{\
+      background: var(--bg-card);\
+      border: 1px solid var(--border);\
+      border-radius: 14px;\
+      padding: 18px;\
+      margin-bottom: 16px;\
+    \}\
+\
+    h2 \{\
+      font-size: 1.1rem;\
+      margin-bottom: 14px;\
+      color: #f7dfc7;\
+    \}\
+\
+    .form-group \{\
+      margin-bottom: 14px;\
+      text-align: left;\
+    \}\
+\
+    label \{\
+      display: block;\
+      font-size: 0.88rem;\
+      color: var(--text-muted);\
+      margin-bottom: 6px;\
+    \}\
+\
+    input, select, textarea \{\
+      width: 100%;\
+      padding: 11px 12px;\
+      border-radius: 10px;\
+      border: 1px solid var(--border);\
+      background: var(--bg-input);\
+      color: var(--text-main);\
+      font-size: 0.95rem;\
+    \}\
+\
+    input:focus, select:focus, textarea:focus \{\
+      outline: 2px solid var(--accent);\
+      border-color: transparent;\
+    \}\
+\
+    .grid-2 \{\
+      display: grid;\
+      grid-template-columns: 1fr 1fr;\
+      gap: 12px;\
+    \}\
+\
+    .btn \{\
+      width: 100%;\
+      padding: 12px 16px;\
+      border: none;\
+      border-radius: 10px;\
+      background: var(--accent);\
+      color: #fff;\
+      font-weight: 700;\
+      font-size: 0.95rem;\
+      cursor: pointer;\
+      transition: background 0.2s;\
+    \}\
+\
+    .btn:hover \{\
+      background: var(--accent-hover);\
+    \}\
+\
+    .btn-secondary \{\
+      background: var(--bg-input);\
+      border: 1px solid var(--border);\
+      color: var(--text-main);\
+    \}\
+\
+    .btn-small \{\
+      width: auto;\
+      padding: 7px 12px;\
+      font-size: 0.82rem;\
+    \}\
+\
+    .btn-danger \{\
+      background: transparent;\
+      border: 1px solid var(--danger);\
+      color: #ff9d8f;\
+    \}\
+\
+    .tabs \{\
+      display: grid;\
+      grid-template-columns: 1fr 1fr;\
+      gap: 8px;\
+      margin-bottom: 16px;\
+    \}\
+\
+    .tab-btn \{\
+      padding: 10px;\
+      border-radius: 10px;\
+      border: 1px solid var(--border);\
+      background: var(--bg-input);\
+      color: var(--text-muted);\
+      font-weight: 600;\
+      cursor: pointer;\
+    \}\
+\
+    .tab-btn.active \{\
+      background: var(--accent);\
+      color: #fff;\
+      border-color: var(--accent);\
+    \}\
+\
+    /* Listas y res\'famenes */\
+    .summary-grid \{\
+      display: grid;\
+      grid-template-columns: repeat(3, 1fr);\
+      gap: 10px;\
+      margin-bottom: 16px;\
+    \}\
+\
+    .stat-box \{\
+      background: var(--bg-input);\
+      border: 1px solid var(--border);\
+      border-radius: 12px;\
+      padding: 12px;\
+      text-align: center;\
+    \}\
+\
+    .stat-box .num \{\
+      font-size: 1.35rem;\
+      font-weight: 800;\
+      color: #f7dfc7;\
+    \}\
+\
+    .stat-box .lbl \{\
+      font-size: 0.75rem;\
+      color: var(--text-muted);\
+      margin-top: 2px;\
+    \}\
+\
+    .record-item \{\
+      background: var(--bg-input);\
+      border: 1px solid var(--border);\
+      border-radius: 12px;\
+      padding: 13px;\
+      margin-bottom: 10px;\
+    \}\
+\
+    .record-top \{\
+      display: flex;\
+      justify-content: space-between;\
+      align-items: center;\
+      gap: 8px;\
+      margin-bottom: 6px;\
+    \}\
+\
+    .badge \{\
+      display: inline-block;\
+      padding: 3px 8px;\
+      border-radius: 999px;\
+      font-size: 0.75rem;\
+      font-weight: 700;\
+      background: rgba(184, 122, 75, 0.25);\
+      color: #f7dfc7;\
+    \}\
+\
+    .record-meta \{\
+      font-size: 0.88rem;\
+      color: var(--text-muted);\
+      line-height: 1.45;\
+    \}\
+\
+    .msg-error \{\
+      color: #ff9d8f;\
+      font-size: 0.85rem;\
+      margin-top: 8px;\
+    \}\
+\
+    .msg-ok \{\
+      color: #9be7b0;\
+      font-size: 0.85rem;\
+      margin-top: 8px;\
+    \}\
+\
+    /* Navegaci\'f3n inferior */\
+    nav.bottom-nav \{\
+      position: fixed;\
+      bottom: 0;\
+      left: 0;\
+      right: 0;\
+      background: var(--bg-card);\
+      border-top: 1px solid var(--border);\
+      display: grid;\
+      grid-template-columns: 1fr 1fr;\
+      z-index: 10;\
+    \}\
+\
+    nav.bottom-nav button \{\
+      padding: 12px;\
+      background: none;\
+      border: none;\
+      color: var(--text-muted);\
+      font-weight: 700;\
+      cursor: pointer;\
+    \}\
+\
+    nav.bottom-nav button.active \{\
+      color: #f7dfc7;\
+      box-shadow: inset 0 3px 0 var(--accent);\
+    \}\
+  </style>\
+</head>\
+<body>\
+\
+  <!-- PANTALLA DE LOGIN -->\
+  <section id="login-view" class="login-box">\
+    <img src="logo-guadalupe.png" alt="Logo Agrupaci\'f3n Local Cazadores Guadalupe" class="logo-img" />\
+    <h1>AGRUPACI\'d3N LOCAL<br />CAZADORES GUADALUPE</h1>\
+\
+    <form id="login-form">\
+      <div class="form-group">\
+        <label for="login-user">Usuario o correo electr\'f3nico</label>\
+        <input type="text" id="login-user" placeholder="Ej. socio@guadalupe.es o usuario" required />\
+      </div>\
+      <div class="form-group">\
+        <label for="login-password">Contrase\'f1a</label>\
+        <input type="password" id="login-password" placeholder="\'95\'95\'95\'95\'95\'95\'95\'95" required />\
+      </div>\
+      <button type="submit" class="btn">Iniciar sesi\'f3n</button>\
+      <p id="login-error" class="msg-error"></p>\
+    </form>\
+  </section>\
+\
+  <!-- APLICACI\'d3N PRINCIPAL -->\
+  <div id="app-view" class="hidden">\
+    <header>\
+      <div class="header-brand">\
+        <img src="logo-guadalupe.png" alt="Logo Guadalupe" />\
+        <span>Cazadores Guadalupe</span>\
+      </div>\
+      <button id="logout-btn" class="btn btn-secondary btn-small">Salir</button>\
+    </header>\
+\
+    <main class="container">\
+      <!-- PESTA\'d1A 1: A\'d1ADIR REGISTROS -->\
+      <section id="view-add">\
+        <div class="tabs">\
+          <button type="button" id="tab-monteria" class="tab-btn active">Monter\'eda</button>\
+          <button type="button" id="tab-espera-rececho" class="tab-btn">Espera / Rececho</button>\
+        </div>\
+\
+        <!-- FORMULARIO MONTER\'cdA -->\
+        <form id="form-monteria" class="card">\
+          <h2>Registrar Monter\'eda</h2>\
+\
+          <div class="form-group">\
+            <label for="monteria-nombre">Nombre de la monter\'eda (opcional)</label>\
+            <input type="text" id="monteria-nombre" placeholder="Ej. Los Alcornocales" />\
+          </div>\
+\
+          <div class="form-group">\
+            <label for="monteria-fecha">Fecha</label>\
+            <input type="date" id="monteria-fecha" required />\
+          </div>\
+\
+          <div class="grid-2">\
+            <div class="form-group">\
+              <label for="monteria-venados">Venados</label>\
+              <input type="number" id="monteria-venados" min="0" value="0" required />\
+            </div>\
+            <div class="form-group">\
+              <label for="monteria-cervuno">Cervuno</label>\
+              <input type="number" id="monteria-cervuno" min="0" value="0" required />\
+            </div>\
+          </div>\
+\
+          <div class="form-group">\
+            <label for="monteria-jabalies">Jabal\'eds</label>\
+            <input type="number" id="monteria-jabalies" min="0" value="0" required />\
+          </div>\
+\
+          <div class="form-group">\
+            <label for="monteria-otros">Otros</label>\
+            <textarea id="monteria-otros" rows="2" placeholder="Observaciones u otras especies..."></textarea>\
+          </div>\
+\
+          <button type="submit" class="btn">Guardar Monter\'eda</button>\
+          <p id="monteria-msg"></p>\
+        </form>\
+\
+        <!-- FORMULARIO ESPERA / RECECHO -->\
+        <form id="form-er" class="card hidden">\
+          <h2>Registrar Espera / Rececho</h2>\
+\
+          <div class="form-group">\
+            <label for="er-fecha">Fecha</label>\
+            <input type="date" id="er-fecha" required />\
+          </div>\
+\
+          <div class="form-group">\
+            <label for="er-accion">Acci\'f3n</label>\
+            <select id="er-accion" required>\
+              <option value="Espera">Espera</option>\
+              <option value="Rececho">Rececho</option>\
+            </select>\
+          </div>\
+\
+          <!-- Si es Espera -->\
+          <div id="er-espera-fields" class="form-group">\
+            <label for="er-jabali-num">Jabal\'ed (cantidad)</label>\
+            <input type="number" id="er-jabali-num" min="0" value="1" required />\
+          </div>\
+\
+          <!-- Si es Rececho -->\
+          <div id="er-rececho-fields" class="hidden">\
+            <div class="form-group">\
+              <label for="er-especie-rececho">Especie en rececho</label>\
+              <select id="er-especie-rececho">\
+                <option value="Venado">Venado</option>\
+                <option value="Corzo">Corzo</option>\
+              </select>\
+            </div>\
+            <div class="form-group">\
+              <label for="er-rececho-num">N\'famero de piezas</label>\
+              <input type="number" id="er-rececho-num" min="0" value="1" />\
+            </div>\
+          </div>\
+\
+          <button type="submit" class="btn">Guardar Espera / Rececho</button>\
+          <p id="er-msg"></p>\
+        </form>\
+      </section>\
+\
+      <!-- PESTA\'d1A 2: RES\'daMENES Y ORDENACI\'d3N -->\
+      <section id="view-stats" class="hidden">\
+        <div class="card">\
+          <h2>Resumen por Temporada / A\'f1o</h2>\
+          <div class="grid-2">\
+            <div class="form-group">\
+              <label for="filter-year">Temporada / A\'f1o</label>\
+              <select id="filter-year">\
+                <option value="todos">Todos los a\'f1os</option>\
+              </select>\
+            </div>\
+            <div class="form-group">\
+              <label for="sort-by">Ordenar por</label>\
+              <select id="sort-by">\
+                <option value="total_desc">Total caza (mayor a menor)</option>\
+                <option value="total_asc">Total caza (menor a mayor)</option>\
+                <option value="fecha_desc">Fecha (m\'e1s reciente)</option>\
+                <option value="fecha_asc">Fecha (m\'e1s antigua)</option>\
+              </select>\
+            </div>\
+          </div>\
+\
+          <div class="summary-grid">\
+            <div class="stat-box">\
+              <div id="stat-total-general" class="num">0</div>\
+              <div class="lbl">Total caza</div>\
+            </div>\
+            <div class="stat-box">\
+              <div id="stat-total-monterias" class="num">0</div>\
+              <div class="lbl">En monter\'edas</div>\
+            </div>\
+            <div class="stat-box">\
+              <div id="stat-total-er" class="num">0</div>\
+              <div class="lbl">Esperas / Recechos</div>\
+            </div>\
+          </div>\
+\
+          <div id="season-breakdown" class="record-meta"></div>\
+        </div>\
+\
+        <div class="card">\
+          <h2>Listado de Capturas</h2>\
+          <div class="tabs" style="grid-template-columns: repeat(3, 1fr);">\
+            <button type="button" data-list-filter="todas" class="tab-btn active list-filter-btn">Todo</button>\
+            <button type="button" data-list-filter="monteria" class="tab-btn list-filter-btn">Monter\'edas</button>\
+            <button type="button" data-list-filter="er" class="tab-btn list-filter-btn">Esperas / Recechos</button>\
+          </div>\
+          <div id="records-list"></div>\
+        </div>\
+      </section>\
+    </main>\
+\
+    <nav class="bottom-nav">\
+      <button type="button" id="nav-add" class="active">A\'f1adir datos</button>\
+      <button type="button" id="nav-stats">Totales y ordenaci\'f3n</button>\
+    </nav>\
+  </div>\
+\
+  <!-- FIREBASE SDK (ES MODULES) -->\
+  <script type="module">\
+    import \{ initializeApp \} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";\
+    import \{\
+      getAuth,\
+      signInWithEmailAndPassword,\
+      signOut,\
+      onAuthStateChanged\
+    \} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";\
+    import \{\
+      getFirestore,\
+      collection,\
+      addDoc,\
+      deleteDoc,\
+      doc,\
+      onSnapshot,\
+      query,\
+      orderBy,\
+      serverTimestamp\
+    \} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";\
+\
+    // 1. SUSTITUYE ESTOS DATOS CON LOS DE TU PROYECTO EN FIREBASE CONSOLE\
+    const firebaseConfig = \{\
+      apiKey: "TU_API_KEY",\
+      authDomain: "TU_PROYECTO.firebaseapp.com",\
+      projectId: "TU_PROYECTO",\
+      storageBucket: "TU_PROYECTO.appspot.com",\
+      messagingSenderId: "TU_SENDER_ID",\
+      appId: "TU_APP_ID"\
+    \};\
+\
+    const app = initializeApp(firebaseConfig);\
+    const auth = getAuth(app);\
+    const db = getFirestore(app);\
+\
+    // Dominio auxiliar si el usuario escribe un nombre de usuario sin '@'\
+    const DEFAULT_USER_DOMAIN = "cazadoresguadalupe.local";\
+\
+    let allRecords = [];\
+    let currentListFilter = "todas";\
+    let unsubscribeRecords = null;\
+\
+    // Elementos DOM\
+    const loginView = document.getElementById("login-view");\
+    const appView = document.getElementById("app-view");\
+    const loginForm = document.getElementById("login-form");\
+    const loginError = document.getElementById("login-error");\
+    const logoutBtn = document.getElementById("logout-btn");\
+\
+    const navAdd = document.getElementById("nav-add");\
+    const navStats = document.getElementById("nav-stats");\
+    const viewAdd = document.getElementById("view-add");\
+    const viewStats = document.getElementById("view-stats");\
+\
+    const tabMonteria = document.getElementById("tab-monteria");\
+    const tabER = document.getElementById("tab-espera-rececho");\
+    const formMonteria = document.getElementById("form-monteria");\
+    const formER = document.getElementById("form-er");\
+\
+    const erAccion = document.getElementById("er-accion");\
+    const erEsperaFields = document.getElementById("er-espera-fields");\
+    const erRecechoFields = document.getElementById("er-rececho-fields");\
+\
+    const filterYear = document.getElementById("filter-year");\
+    const sortBy = document.getElementById("sort-by");\
+    const recordsList = document.getElementById("records-list");\
+\
+    // Establecer fecha de hoy por defecto\
+    const todayISO = new Date().toISOString().split("T")[0];\
+    document.getElementById("monteria-fecha").value = todayISO;\
+    document.getElementById("er-fecha").value = todayISO;\
+\
+    // Cambio entre Espera y Rececho\
+    erAccion.addEventListener("change", () => \{\
+      if (erAccion.value === "Espera") \{\
+        erEsperaFields.classList.remove("hidden");\
+        erRecechoFields.classList.add("hidden");\
+      \} else \{\
+        erEsperaFields.classList.add("hidden");\
+        erRecechoFields.classList.remove("hidden");\
+      \}\
+    \});\
+\
+    // Pesta\'f1as del formulario\
+    tabMonteria.addEventListener("click", () => \{\
+      tabMonteria.classList.add("active");\
+      tabER.classList.remove("active");\
+      formMonteria.classList.remove("hidden");\
+      formER.classList.add("hidden");\
+    \});\
+\
+    tabER.addEventListener("click", () => \{\
+      tabER.classList.add("active");\
+      tabMonteria.classList.remove("active");\
+      formER.classList.remove("hidden");\
+      formMonteria.classList.add("hidden");\
+    \});\
+\
+    // Navegaci\'f3n inferior\
+    navAdd.addEventListener("click", () => \{\
+      navAdd.classList.add("active");\
+      navStats.classList.remove("active");\
+      viewAdd.classList.remove("hidden");\
+      viewStats.classList.add("hidden");\
+    \});\
+\
+    navStats.addEventListener("click", () => \{\
+      navStats.classList.add("active");\
+      navAdd.classList.remove("active");\
+      viewStats.classList.remove("hidden");\
+      viewAdd.classList.add("hidden");\
+      renderStatsAndList();\
+    \});\
+\
+    // Login con usuario / contrase\'f1a\
+    loginForm.addEventListener("submit", async (e) => \{\
+      e.preventDefault();\
+      loginError.textContent = "";\
+      let rawUser = document.getElementById("login-user").value.trim();\
+      const password = document.getElementById("login-password").value;\
+\
+      const email = rawUser.includes("@")\
+        ? rawUser\
+        : `$\{rawUser.toLowerCase().replace(/\\s+/g, "")\}@$\{DEFAULT_USER_DOMAIN\}`;\
+\
+      try \{\
+        await signInWithEmailAndPassword(auth, email, password);\
+      \} catch (err) \{\
+        loginError.textContent = "Usuario o contrase\'f1a incorrectos.";\
+      \}\
+    \});\
+\
+    logoutBtn.addEventListener("click", async () => \{\
+      await signOut(auth);\
+    \});\
+\
+    // Escuchar estado de autenticaci\'f3n\
+    onAuthStateChanged(auth, (user) => \{\
+      if (user) \{\
+        loginView.classList.add("hidden");\
+        appView.classList.remove("hidden");\
+        subscribeToCapturas();\
+      \} else \{\
+        appView.classList.add("hidden");\
+        loginView.classList.remove("hidden");\
+        if (unsubscribeRecords) unsubscribeRecords();\
+      \}\
+    \});\
+\
+    // Guardar Monter\'eda en Firestore\
+    formMonteria.addEventListener("submit", async (e) => \{\
+      e.preventDefault();\
+      const msgEl = document.getElementById("monteria-msg");\
+      msgEl.className = "";\
+      msgEl.textContent = "Guardando...";\
+\
+      const nombre = document.getElementById("monteria-nombre").value.trim();\
+      const fecha = document.getElementById("monteria-fecha").value;\
+      const venados = Number(document.getElementById("monteria-venados").value) || 0;\
+      const cervuno = Number(document.getElementById("monteria-cervuno").value) || 0;\
+      const jabalies = Number(document.getElementById("monteria-jabalies").value) || 0;\
+      const otros = document.getElementById("monteria-otros").value.trim();\
+      const total = venados + cervuno + jabalies;\
+      const anio = fecha ? Number(fecha.split("-")[0]) : new Date().getFullYear();\
+\
+      try \{\
+        await addDoc(collection(db, "capturas"), \{\
+          tipo: "monteria",\
+          nombre: nombre || "Monter\'eda",\
+          fecha,\
+          anio,\
+          venados,\
+          cervuno,\
+          jabalies,\
+          otros,\
+          total,\
+          creadoEn: serverTimestamp()\
+        \});\
+        msgEl.className = "msg-ok";\
+        msgEl.textContent = `Monter\'eda guardada ($\{total\} piezas).`;\
+        document.getElementById("monteria-nombre").value = "";\
+        document.getElementById("monteria-venados").value = 0;\
+        document.getElementById("monteria-cervuno").value = 0;\
+        document.getElementById("monteria-jabalies").value = 0;\
+        document.getElementById("monteria-otros").value = "";\
+      \} catch (err) \{\
+        msgEl.className = "msg-error";\
+        msgEl.textContent = "Error al guardar en Firebase.";\
+      \}\
+    \});\
+\
+    // Guardar Espera / Rececho en Firestore\
+    formER.addEventListener("submit", async (e) => \{\
+      e.preventDefault();\
+      const msgEl = document.getElementById("er-msg");\
+      msgEl.className = "";\
+      msgEl.textContent = "Guardando...";\
+\
+      const fecha = document.getElementById("er-fecha").value;\
+      const accion = erAccion.value;\
+      const anio = fecha ? Number(fecha.split("-")[0]) : new Date().getFullYear();\
+\
+      let especie = "";\
+      let cantidad = 0;\
+\
+      if (accion === "Espera") \{\
+        especie = "Jabal\'ed";\
+        cantidad = Number(document.getElementById("er-jabali-num").value) || 0;\
+      \} else \{\
+        especie = document.getElementById("er-especie-rececho").value; // Venado o Corzo\
+        cantidad = Number(document.getElementById("er-rececho-num").value) || 0;\
+      \}\
+\
+      try \{\
+        await addDoc(collection(db, "capturas"), \{\
+          tipo: "er",\
+          fecha,\
+          anio,\
+          accion,\
+          especie,\
+          cantidad,\
+          total: cantidad,\
+          creadoEn: serverTimestamp()\
+        \});\
+        msgEl.className = "msg-ok";\
+        msgEl.textContent = `$\{accion\} guardada ($\{cantidad\} $\{especie\}).`;\
+        document.getElementById("er-jabali-num").value = 1;\
+        document.getElementById("er-rececho-num").value = 1;\
+      \} catch (err) \{\
+        msgEl.className = "msg-error";\
+        msgEl.textContent = "Error al guardar en Firebase.";\
+      \}\
+    \});\
+\
+    // Escuchar datos en tiempo real desde Firestore\
+    function subscribeToCapturas() \{\
+      const q = query(collection(db, "capturas"), orderBy("fecha", "desc"));\
+      unsubscribeRecords = onSnapshot(q, (snapshot) => \{\
+        allRecords = snapshot.docs.map((d) => (\{ id: d.id, ...d.data() \}));\
+        populateYearFilter();\
+        renderStatsAndList();\
+      \});\
+    \}\
+\
+    function populateYearFilter() \{\
+      const currentSelected = filterYear.value;\
+      const years = new Set(["2026", "2027"]);\
+      allRecords.forEach((r) => \{\
+        if (r.anio) years.add(String(r.anio));\
+      \});\
+      const sortedYears = Array.from(years).sort((a, b) => Number(b) - Number(a));\
+\
+      filterYear.innerHTML = `<option value="todos">Todos los a\'f1os</option>`;\
+      sortedYears.forEach((y) => \{\
+        const opt = document.createElement("option");\
+        opt.value = y;\
+        opt.textContent = `Temporada $\{y\}`;\
+        filterYear.appendChild(opt);\
+      \});\
+\
+      if (Array.from(filterYear.options).some((o) => o.value === currentSelected)) \{\
+        filterYear.value = currentSelected;\
+      \}\
+    \}\
+\
+    // Filtros de listado\
+    document.querySelectorAll(".list-filter-btn").forEach((btn) => \{\
+      btn.addEventListener("click", () => \{\
+        document.querySelectorAll(".list-filter-btn").forEach((b) => b.classList.remove("active"));\
+        btn.classList.add("active");\
+        currentListFilter = btn.dataset.listFilter;\
+        renderStatsAndList();\
+      \});\
+    \});\
+\
+    filterYear.addEventListener("change", renderStatsAndList);\
+    sortBy.addEventListener("change", renderStatsAndList);\
+\
+    function renderStatsAndList() \{\
+      const selectedYear = filterYear.value;\
+      const yearFiltered = selectedYear === "todos"\
+        ? allRecords\
+        : allRecords.filter((r) => String(r.anio) === selectedYear);\
+\
+      const totalMonterias = yearFiltered\
+        .filter((r) => r.tipo === "monteria")\
+        .reduce((acc, r) => acc + (Number(r.total) || 0), 0);\
+\
+      const totalER = yearFiltered\
+        .filter((r) => r.tipo === "er")\
+        .reduce((acc, r) => acc + (Number(r.total) || 0), 0);\
+\
+      const totalGeneral = totalMonterias + totalER;\
+\
+      document.getElementById("stat-total-general").textContent = totalGeneral;\
+      document.getElementById("stat-total-monterias").textContent = totalMonterias;\
+      document.getElementById("stat-total-er").textContent = totalER;\
+\
+      // Desglose por a\'f1o/temporada\
+      const byYear = \{\};\
+      allRecords.forEach((r) => \{\
+        const y = r.anio || "Sin a\'f1o";\
+        if (!byYear[y]) byYear[y] = \{ total: 0, monterias: 0, er: 0 \};\
+        const val = Number(r.total) || 0;\
+        byYear[y].total += val;\
+        if (r.tipo === "monteria") byYear[y].monterias += val;\
+        if (r.tipo === "er") byYear[y].er += val;\
+      \});\
+\
+      const breakdownEl = document.getElementById("season-breakdown");\
+      const yearKeys = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));\
+      breakdownEl.innerHTML = yearKeys.length\
+        ? yearKeys.map((y) =>\
+            `<div>\'95 <strong>A\'f1o $\{y\}:</strong> $\{byYear[y].total\} piezas (Monter\'edas: $\{byYear[y].monterias\} | Esperas/Recechos: $\{byYear[y].er\})</div>`\
+          ).join("")\
+        : "<div>A\'fan no hay registros guardados.</div>";\
+\
+      // Filtrar por tipo para la lista y ordenar\
+      let listItems = currentListFilter === "todas"\
+        ? [...yearFiltered]\
+        : yearFiltered.filter((r) => r.tipo === currentListFilter);\
+\
+      listItems.sort((a, b) => \{\
+        const totA = Number(a.total) || 0;\
+        const totB = Number(b.total) || 0;\
+        if (sortBy.value === "total_desc") return totB - totA;\
+        if (sortBy.value === "total_asc") return totA - totB;\
+        if (sortBy.value === "fecha_desc") return (b.fecha || "").localeCompare(a.fecha || "");\
+        if (sortBy.value === "fecha_asc") return (a.fecha || "").localeCompare(b.fecha || "");\
+        return 0;\
+      \});\
+\
+      if (!listItems.length) \{\
+        recordsList.innerHTML = `<p class="record-meta">No hay registros para este filtro.</p>`;\
+        return;\
+      \}\
+\
+      recordsList.innerHTML = listItems.map((item) => \{\
+        if (item.tipo === "monteria") \{\
+          return `\
+            <div class="record-item">\
+              <div class="record-top">\
+                <span class="badge">MONTER\'cdA \'b7 $\{item.total\} piezas</span>\
+                <button class="btn btn-danger btn-small" onclick="window.eliminarCaptura('$\{item.id\}')">Borrar</button>\
+              </div>\
+              <div class="record-meta">\
+                <strong>$\{item.nombre || "Monter\'eda"\}</strong> \'97 Fecha: <strong>$\{item.fecha\}</strong> (A\'f1o $\{item.anio\})<br />\
+                Venados: <strong>$\{item.venados\}</strong> \'b7 Cervuno: <strong>$\{item.cervuno\}</strong> \'b7 Jabal\'eds: <strong>$\{item.jabalies\}</strong>\
+                $\{item.otros ? `<br />Otros: $\{item.otros\}` : ""\}\
+              </div>\
+            </div>\
+          `;\
+        \} else \{\
+          return `\
+            <div class="record-item">\
+              <div class="record-top">\
+                <span class="badge">$\{item.accion.toUpperCase()\} \'b7 $\{item.total\} $\{item.especie\}</span>\
+                <button class="btn btn-danger btn-small" onclick="window.eliminarCaptura('$\{item.id\}')">Borrar</button>\
+              </div>\
+              <div class="record-meta">\
+                Fecha: <strong>$\{item.fecha\}</strong> (A\'f1o $\{item.anio\})<br />\
+                Acci\'f3n: <strong>$\{item.accion\}</strong> \'97 $\{item.especie\}: <strong>$\{item.cantidad\}</strong>\
+              </div>\
+            </div>\
+          `;\
+        \}\
+      \}).join("");\
+    \}\
+\
+    window.eliminarCaptura = async (id) => \{\
+      if (confirm("\'bfSeguro que quieres eliminar este registro?")) \{\
+        await deleteDoc(doc(db, "capturas", id));\
+      \}\
+    \};\
+  </script>\
+</body>\
+</html>\
+}
